@@ -1,0 +1,169 @@
+<!-- ================================================================
+     nav-menu.component.html — Barra de Navegación Principal
+     ================================================================
+     Este es el navbar que aparece en TODAS las páginas.
+     Su comportamiento cambia según si el usuario está logueado
+     y cuál es su rol (Admin o Cliente).
+
+     LÓGICA DE VISIBILIDAD:
+     - *ngIf="!isLoggedIn" → Solo visible cuando NO hay sesión activa
+     - *ngIf="isLoggedIn"  → Solo visible cuando SÍ hay sesión activa
+     - *ngIf="userRole === 'Admin'" → Solo visible para administradores
+     ================================================================ -->
+
+<header>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+
+      <!-- ============================================================
+           LOGO / MARCA DE LA APP
+           ============================================================
+           [routerLink]="['/']" es la forma de Angular de hacer un
+           enlace interno sin recargar la página (como un <a href="/">
+           pero más inteligente, no hace reload completo).
+           ============================================================ -->
+      <a class="navbar-brand d-flex align-items-center gap-2"
+         [routerLink]="['/']"
+         id="nav-brand">
+        <!-- Ícono de pelota de fútbol -->
+        <span class="nav-logo-icon">⚽</span>
+        <!-- Nombre de la app con dos colores -->
+        <span class="nav-logo-text">
+          <span class="text-white fw-bold">Canchas</span><span style="color: var(--color-primary);">Pro</span>
+        </span>
+      </a>
+
+      <!-- ============================================================
+           BOTÓN HAMBURGUESA (para móvil)
+           ============================================================
+           En pantallas pequeñas (celular), el menú se colapsa.
+           Este botón lo abre/cierra cuando el usuario hace clic.
+           (click)="toggle()" llama al método toggle() del componente .ts
+           ============================================================ -->
+      <button class="navbar-toggler"
+              type="button"
+              (click)="toggle()"
+              [attr.aria-expanded]="isExpanded"
+              aria-label="Abrir menú"
+              id="nav-hamburger">
+        <!-- Ícono de tres líneas (☰) de Bootstrap Icons -->
+        <i class="bi bi-list" style="color: var(--color-primary); font-size: 1.5rem;"></i>
+      </button>
+
+      <!-- ============================================================
+           MENÚ PRINCIPAL
+           ============================================================
+           [ngClass]="{ show: isExpanded }" agrega la clase 'show'
+           cuando isExpanded es true, lo que despliega el menú en móvil.
+           ============================================================ -->
+      <div class="navbar-collapse collapse"
+           [ngClass]="{ 'show': isExpanded }"
+           id="navbarContent">
+
+        <!-- Navegación principal — alineada a la derecha con ms-auto -->
+        <ul class="navbar-nav ms-auto align-items-center gap-1">
+
+          <!-- ========================================================
+               ENLACE A INICIO — Siempre visible para todos
+               ======================================================== -->
+          <li class="nav-item">
+            <a class="nav-link"
+               [routerLink]="['/']"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{ exact: true }"
+               id="nav-inicio">
+              <i class="bi bi-house-door me-1"></i> Inicio
+            </a>
+          </li>
+
+          <!-- ========================================================
+               RUTAS PÚBLICAS — Solo para usuarios NO logueados
+               *ngIf="!isLoggedIn" esconde estos links cuando hay sesión.
+               ======================================================== -->
+          <ng-container *ngIf="!isLoggedIn">
+
+            <!-- Botón de Iniciar Sesión — estilo outline verde -->
+            <li class="nav-item">
+              <a class="btn btn-outline-success btn-sm px-3"
+                 [routerLink]="['/login']"
+                 id="nav-login">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+              </a>
+            </li>
+
+            <!-- Botón de Registro — estilo sólido verde -->
+            <li class="nav-item">
+              <a class="btn btn-success btn-sm px-3"
+                 [routerLink]="['/register']"
+                 id="nav-registro">
+                <i class="bi bi-person-plus me-1"></i> Registrarse
+              </a>
+            </li>
+
+          </ng-container>
+
+          <!-- ========================================================
+               RUTAS PRIVADAS — Solo para usuarios CON sesión activa
+               *ngIf="isLoggedIn" las oculta si no hay token.
+               ======================================================== -->
+          <ng-container *ngIf="isLoggedIn">
+
+            <!-- Enlace a Canchas — visible para todos los logueados -->
+            <li class="nav-item">
+              <a class="nav-link"
+                 [routerLink]="['/canchas']"
+                 [routerLinkActive]="['active']"
+                 id="nav-canchas">
+                <i class="bi bi-grid-3x3-gap me-1"></i> Canchas
+              </a>
+            </li>
+
+            <!-- Enlace a Reservas — texto cambia según el rol -->
+            <li class="nav-item">
+              <a class="nav-link"
+                 [routerLink]="['/reservas']"
+                 [routerLinkActive]="['active']"
+                 id="nav-reservas">
+                <i class="bi bi-calendar-check me-1"></i>
+                <!-- Operador ternario: Si es Admin → "Todas las Reservas", si es Cliente → "Mis Reservas" -->
+                {{ userRole === 'Admin' ? 'Todas las Reservas' : 'Mis Reservas' }}
+              </a>
+            </li>
+
+            <!-- Separador visual entre las rutas y el menú de usuario -->
+            <li class="nav-item">
+              <div class="nav-separator"></div>
+            </li>
+
+            <!-- ======================================================
+                 CHIP DE USUARIO — Muestra el rol activo
+                 ====================================================== -->
+            <li class="nav-item">
+              <!-- Badge de rol — verde para Admin, gris para Cliente -->
+              <span class="nav-role-badge"
+                    [class.admin-badge]="userRole === 'Admin'"
+                    id="nav-role-badge">
+                <!-- Ícono de escudo para Admin, persona para Cliente -->
+                <i class="bi"
+                   [class.bi-shield-check]="userRole === 'Admin'"
+                   [class.bi-person-circle]="userRole !== 'Admin'"></i>
+                {{ userRole }}
+              </span>
+            </li>
+
+            <!-- Botón de Cerrar Sesión -->
+            <li class="nav-item">
+              <button class="btn btn-logout"
+                      (click)="logout()"
+                      id="nav-logout">
+                <!-- Ícono de salida de Bootstrap Icons -->
+                <i class="bi bi-box-arrow-right me-1"></i> Salir
+              </button>
+            </li>
+
+          </ng-container>
+        </ul>
+      </div><!-- fin navbar-collapse -->
+    </div><!-- fin container -->
+  </nav>
+</header>

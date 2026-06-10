@@ -1,0 +1,80 @@
+<!-- ================================================================
+     reservas-list.component.html — Vista del listado de Reservas
+     ================================================================ -->
+
+<div class="page-container fade-in-up">
+
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <div>
+      <h1 class="page-title"><i class="bi bi-calendar-check me-2 text-primary-green"></i>
+        {{ userRole === 'Admin' ? 'Todas las Reservas' : 'Mis Reservas' }}
+      </h1>
+      <p class="text-secondary mb-0">Gestiona los horarios apartados</p>
+    </div>
+  </div>
+
+  <div class="alert alert-success fade-in-up" *ngIf="mensajeExito">
+    <i class="bi bi-check-circle-fill me-2"></i>{{ mensajeExito }}
+  </div>
+  <div class="alert alert-danger fade-in-up" *ngIf="mensajeError">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ mensajeError }}
+  </div>
+
+  <div class="text-center py-5" *ngIf="isLoading">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status"></div>
+  </div>
+
+  <div class="card card-dark text-center py-5 fade-in-up" *ngIf="!isLoading && reservas.length === 0">
+    <div class="card-body">
+      <i class="bi bi-calendar-x icon-hero text-muted mb-3"></i>
+      <h3 class="text-white">Aún no hay reservas</h3>
+      <p class="text-secondary">
+        {{ userRole === 'Admin' ? 'Nadie ha reservado una cancha todavía.' : 'No tienes reservas activas. ¡Ve a la sección de Canchas y separa tu horario!' }}
+      </p>
+      <a *ngIf="userRole !== 'Admin'" [routerLink]="['/canchas']" class="btn btn-success mt-2">Explorar Canchas</a>
+    </div>
+  </div>
+
+  <div class="card card-dark fade-in-up" *ngIf="!isLoading && reservas.length > 0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 align-middle">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 5%">ID</th>
+            <th scope="col" style="width: 25%">Cancha</th>
+            <!-- Mostramos la columna Usuario SOLO si es Admin -->
+            <th scope="col" style="width: 20%" *ngIf="userRole === 'Admin'">Usuario</th>
+            <th scope="col" style="width: 15%">Inicio</th>
+            <th scope="col" style="width: 15%">Fin</th>
+            <th scope="col" style="width: 10%" class="text-center">Estado</th>
+            <th scope="col" style="width: 10%" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let res of reservas">
+            <td><span class="text-muted">#{{ res.id }}</span></td>
+            <td class="fw-bold text-white">{{ res.canchaNombre }}</td>
+            <td *ngIf="userRole === 'Admin'">
+              <span class="badge bg-secondary"><i class="bi bi-person me-1"></i>{{ res.usuarioNombre }}</span>
+            </td>
+            <td><i class="bi bi-clock me-1 text-muted"></i>{{ formatearFecha(res.fechaInicio) }}</td>
+            <td><i class="bi bi-clock-history me-1 text-muted"></i>{{ formatearFecha(res.fechaFin) }}</td>
+            <td class="text-center">
+              <!-- Clase CSS dinámica según el estado de la reserva -->
+              <span class="badge badge-{{ res.estado | lowercase }}">{{ res.estado }}</span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-danger" 
+                      *ngIf="res.estado !== 'Cancelada'"
+                      (click)="cancelarReserva(res.id)" 
+                      title="Cancelar Reserva">
+                <i class="bi bi-x-circle"></i> Cancelar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

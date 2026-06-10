@@ -1,93 +1,90 @@
-# Sistema de Reservas de Canchas Sintéticas ⚽🏟️
+# ⚽ CanchasPro — Sistema de Reservas de Canchas Sintéticas 🏟️
 
-Este proyecto es una aplicación **Full Stack** construida con la arquitectura integrada de **ASP.NET Core 8.0** y **Angular**. Sirve como entrega final para la asignatura de Programación Web 2.
+Este proyecto es una aplicación **Full Stack** construida bajo una arquitectura integrada de **ASP.NET Core (con .NET 9.0)** y **Angular**. Está diseñada para gestionar la reserva y alquiler de canchas deportivas sintéticas bajo el patrón arquitectónico **Modelo-Vista-Controlador (MVC)**.
 
-## Descripción del Sistema
+---
 
-El sistema permite a los usuarios:
-1. **Registrarse e Iniciar Sesión**: Autenticación segura mediante JWT y contraseñas encriptadas con BCrypt.
-2. **Gestionar Canchas (Admin)**: Creación, actualización, listado y eliminación de canchas sintéticas.
-3. **Buscar Canchas (Cliente)**: Visualización de canchas con paginación server-side y filtros de búsqueda por nombre.
-4. **Hacer Reservas (Cliente)**: Los clientes pueden reservar canchas en un horario específico (se validan solapamientos) y cancelar sus propias reservas (Soft Delete).
+## 🚀 Características del Sistema
+
+1. **Autenticación y Autorización Segura**: 
+   - Registro de usuarios e Inicio de Sesión seguro.
+   - Seguridad mediante **JSON Web Tokens (JWT)** para endpoints protegidos.
+   - Contraseñas encriptadas con hashing seguro **BCrypt** de costo 11.
+2. **Roles de Usuario Diferenciados**:
+   - **Administrador**: Gestión completa (CRUD) de las canchas disponibles (crear, editar, eliminar y listar). Visualización global de todas las reservas registradas.
+   - **Cliente**: Listado interactivo de canchas con buscador en tiempo real, filtros y paginación desde el servidor. Creación y visualización de sus reservas personales.
+3. **Módulo de Reserva Interactivo**:
+   - Selector interactivo mediante modal para elegir la **Fecha**, la **Hora de Inicio** y la **Hora de Fin** de la reserva.
+   - **Validación en Tiempo Real**: Evita la creación de reservas en el pasado y previene solapamientos o cruces de horarios en una misma cancha.
+   - **Cancelación de Reservas**: Soporte para cancelación de turnos mediante *Soft Delete* (se mantiene el registro con estado `'Cancelada'`).
 
 ---
 
 ## 🛠️ Requisitos Previos
 
-Antes de ejecutar el proyecto, asegúrate de tener instalado:
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [Node.js (LTS)](https://nodejs.org/) (Necesario para Angular)
-- [PostgreSQL](https://www.postgresql.org/download/)
+Asegúrate de contar con lo siguiente instalado en tu equipo:
+- [.NET 8.0 SDK o .NET 9.0 SDK](https://dotnet.microsoft.com/download)
+- [Node.js (LTS)](https://nodejs.org/) (versión 18 o superior para Angular)
+- [PostgreSQL](https://www.postgresql.org/download/) en ejecución local.
 
 ---
 
-## ⚙️ Variables de Entorno y Configuración
+## ⚙️ Configuración e Inicialización
 
-Toda la configuración principal se encuentra en el archivo `appsettings.json` (ubicado en la raíz del backend).
+Toda la configuración principal del sistema se define en el archivo [appsettings.json](file:///d:/ReservasWEB2-20260610T012004Z-3-001/ReservasWEB2/appsettings.json):
 
-1. **Cadena de Conexión (Base de Datos)**
-   El sistema está configurado para apuntar a un servidor PostgreSQL local. 
-   ```json
-   "ConnectionStrings": {
-     "DefaultConnection": "Host=localhost;Port=5432;Database=ReservasDB;Username=postgres;Password=tu_contraseña_aqui"
-   }
-   ```
-   **IMPORTANTE**: Debes asegurarte de que tu servidor PostgreSQL esté corriendo e introducir tu contraseña real en `Password`.
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5432;Database=ReservasWEB2;Username=postgres;Password=frisby15;Include Error Detail=true"
+}
+```
 
-2. **Llave JWT**
-   La clave para firmar los tokens debe tener al menos 32 caracteres de longitud. Ya viene configurada una por defecto segura en el archivo.
+> [!NOTE]
+> La base de datos por defecto está configurada para el usuario `postgres` y la contraseña `frisby15`. Puedes cambiar la contraseña si tu servidor PostgreSQL local utiliza otra distinta.
 
 ---
 
-## 🚀 Instrucciones de Instalación y Ejecución
+## 🏃 Pasos para Ejecutar el Proyecto
 
-Sigue estos pasos en tu terminal (abre PowerShell en la carpeta del proyecto `ReservasWEB2`):
+Sigue las siguientes instrucciones desde una terminal (abierta en la carpeta raíz del backend `ReservasWEB2`):
 
-### 1. Aplicar las Migraciones (Crear la Base de Datos)
-Ya se ha generado la migración inicial (`InitialCreate`). Solo debes aplicarla a tu motor PostgreSQL:
+### 1. Recrear y Migrar la Base de Datos
+Para generar la base de datos limpia con todas las tablas y los datos semilla precargados, ejecuta:
 ```bash
+# Restaura los paquetes NuGet necesarios
+dotnet restore ReservasWEB2.csproj
+
+# Aplica las migraciones de Entity Framework y los datos semilla
 dotnet ef database update
 ```
-*(Si te aparece que 'dotnet-ef' no se reconoce, instala la herramienta primero: `dotnet tool install --global dotnet-ef`)*
 
-### 2. Levantar el Servidor
-Dado que es una arquitectura integrada (SPA), el comando `dotnet run` construirá el backend en .NET e internamente llamará a `npm start` para levantar Angular.
+### 2. Instalar Dependencias del Frontend
+Accede a la carpeta de la interfaz de Angular e instala los módulos limpios:
+```bash
+cd ClientApp
+npm install
+cd ..
+```
+
+### 3. Levantar la Aplicación
+Regresa a la raíz de `ReservasWEB2` e inicia el servidor unificado:
 ```bash
 dotnet run
 ```
 
-Una vez en ejecución, podrás acceder a la aplicación en tu navegador web. (Revisa la consola para ver la URL exacta, típicamente `https://localhost:7198` o similar).
-
-### 3. Swagger (Para el Docente)
-Puedes probar directamente los endpoints de la API navegando a `/swagger` en la URL generada.
-
----
-
-## 👥 Credenciales de Prueba Sugeridas
-
-Como el sistema exige que el **Administrador** sea quien cree las canchas inicialmente, y los **Clientes** quienes reserven, sigue este flujo para tu sustentación:
-
-1. **Crear un Admin**:
-   Para crear un Admin rápido, registra un usuario normal desde la pantalla "Registro" y luego actualiza directamente en tu base de datos PostgreSQL su columna `Role` a `"Admin"`.
-   ```sql
-   UPDATE "Usuarios" SET "Role" = 'Admin' WHERE "Email" = 'admin@admin.com';
-   ```
-
-2. **Probar el Cliente**:
-   Registra otro usuario desde la interfaz web (por defecto será "Cliente"). Inicia sesión con él y verás que el menú se adapta y le permite hacer reservas.
+Una vez ejecutado, el servidor levantará automáticamente la API de .NET y el servidor de desarrollo de Angular:
+* **Aplicación Web (Cliente + Admin)**: **[https://localhost:7107](https://localhost:7107)**
+* **Documentación Interactiva (Swagger)**: **[https://localhost:7107/swagger](https://localhost:7107/swagger)**
 
 ---
 
-## 📦 Comandos de Git para subir a tu Repositorio
+## 👥 Credenciales de Prueba Precargadas
 
-Si deseas subir este proyecto a GitHub/GitLab, ejecuta los siguientes comandos en la terminal desde la carpeta raíz:
+Para facilitar la sustentación y las pruebas, la base de datos se autosemilla automáticamente con los siguientes perfiles de prueba:
 
-```bash
-git init
-git add .
-git commit -m "Entrega Final: Sistema de Reservas de Canchas Sintéticas (.NET 8 + Angular)"
-git branch -M main
-git remote add origin URL_DE_TU_REPOSITORIO_AQUI
-git push -u origin main
-```
-*(No olvides reemplazar `URL_DE_TU_REPOSITORIO_AQUI` con la URL que te da GitHub al crear un nuevo proyecto vacío)*.
+| Rol | Correo Electrónico | Contraseña | Acciones Permitidas |
+| :--- | :--- | :--- | :--- |
+| **Administrador** | `admin@canchas.com` | `admin123` | CRUD de canchas, ver todas las reservas de todos los clientes. |
+| **Cliente** | `cliente@canchas.com` | `cliente123` | Buscar canchas, seleccionar fecha/hora y reservar turnos, cancelar sus propias reservas. |
+
+*También puedes registrar nuevos usuarios en la opción **"Regístrate aquí"** de la pantalla de login (por defecto, cualquier usuario nuevo se registrará con el rol de Cliente).*
