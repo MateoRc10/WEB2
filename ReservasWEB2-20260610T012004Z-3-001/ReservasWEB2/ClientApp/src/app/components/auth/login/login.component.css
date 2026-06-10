@@ -1,0 +1,235 @@
+/* ================================================================
+   Estilos compartidos para Login y Register
+   ================================================================
+   Las clases .auth-* se usan tanto en login como en register
+   para mantener un diseño consistente en ambas pantallas.
+   ================================================================ */
+
+/* Centra la tarjeta verticalmente en la pantalla */
+.auth-page {
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: flex-start; /* Alineado arriba (no perfecto centrado vertical) */
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 80px); /* Ocupa toda la pantalla menos el navbar */
+}
+
+/* ================================================================
+   TARJETA DEL FORMULARIO — Glassmorphism oscuro
+   ================================================================ */
+.auth-card {
+  width: 100%;
+  max-width: 460px; /* Ancho máximo para que no se estire en pantallas grandes */
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl); /* Esquinas muy redondeadas */
+  padding: 2.5rem;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(255, 255, 255, 0.03); /* Doble sombra para profundidad */
+}
+
+/* ================================================================
+   ENCABEZADO DE LA TARJETA
+   ================================================================ */
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Círculo con ícono grande */
+.auth-icon-wrapper {
+  width: 72px;
+  height: 72px;
+  background: var(--color-primary-glow);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  font-size: 2rem;
+  color: var(--color-primary);
+  /* Sombra verde tipo "neon" — efecto deportivo */
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+.auth-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.3px;
+}
+
+.auth-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* ================================================================
+   CAMPO DE CONTRASEÑA CON TOGGLE
+   ================================================================
+   Necesitamos position: relative en el wrapper para que
+   el botón de ojo se posicione dentro del campo.
+   ================================================================ */
+.input-password-wrapper {
+  position: relative; /* El hijo absoluto (botón ojo) se posiciona dentro de aquí */
+}
+
+/* Agregamos padding derecho para que el texto no tape el ícono de ojo */
+.input-password-wrapper .form-control {
+  padding-right: 3.5rem !important; /* Espacio para el botón de ojo */
+}
+
+/* Botón de ojo de la contraseña */
+.password-toggle {
+  position: absolute; /* Se sale del flujo normal y se posiciona sobre el input */
+  right: 12px; /* Pegado al borde derecho */
+  top: 50%; /* A la mitad de la altura */
+  transform: translateY(-50%); /* Ajuste para centrar exactamente */
+  background: transparent; /* Sin fondo */
+  border: none; /* Sin borde */
+  color: var(--color-text-muted);
+  cursor: pointer; /* Cursor de mano */
+  padding: 0.25rem;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  z-index: 5; /* Encima del input */
+}
+
+.password-toggle:hover {
+  color: var(--color-primary); /* Verde al hacer hover */
+}
+
+/* ================================================================
+   BOTÓN DE SUBMIT
+   ================================================================ */
+.btn-auth-submit {
+  padding: 0.85rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  margin-top: 0.5rem;
+  border-radius: var(--radius-md) !important;
+}
+
+/* Estado deshabilitado del botón (cuando el form es inválido o está cargando) */
+.btn-auth-submit:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* ================================================================
+   PIE DE TARJETA
+   ================================================================ */
+.auth-footer {
+  text-align: center;
+  margin-top: 1.75rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Enlace de registro */
+.auth-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin-left: 0.3rem;
+}
+
+.auth-link:hover {
+  color: #4ade80; /* Verde más claro al hover */
+  text-decoration: underline;
+}
+
+/* ================================================================
+   CREDENCIALES DE DEMO — Para facilitar la sustentación
+   ================================================================ */
+.demo-credentials {
+  margin-top: 1.5rem;
+}
+
+/* Separador con texto en el medio */
+.demo-divider {
+  text-align: center;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* Línea que pasa detrás del texto "Datos de prueba" */
+.demo-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+  z-index: 0;
+}
+
+.demo-divider span {
+  position: relative;
+  background: var(--color-bg-card); /* Cubre la línea detrás del texto */
+  padding: 0 0.75rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 1;
+}
+
+.demo-row {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Tarjeta de credencial de demo */
+.demo-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  font-size: 0.8rem;
+  align-items: center;
+}
+
+/* Badge de rol en las credenciales */
+.demo-role {
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.demo-role.admin {
+  background: var(--color-primary-glow);
+  color: var(--color-primary);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.demo-role.cliente {
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+/* Código de credencial */
+.demo-item code {
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}

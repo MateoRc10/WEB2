@@ -1,0 +1,319 @@
+/* ================================================================
+   home.component.css — Estilos exclusivos de la Página de Inicio
+   ================================================================ */
+
+/* ================================================================
+   SECCIÓN HERO — El bloque visual principal de impacto
+   ================================================================ */
+.hero-section {
+  position: relative;
+  text-align: center;
+  padding: 5rem 1rem 4rem;
+  overflow: hidden; /* Oculta los blobs que sobresalen del borde */
+}
+
+/* ================================================================
+   BLOBS DECORATIVOS DE FONDO
+   ================================================================
+   Son círculos de gradiente animados que dan un efecto visual
+   de "aura deportiva" en el fondo. Se llaman "blobs" en diseño UI.
+   ================================================================ */
+.hero-blob {
+  position: absolute; /* Posicionados sobre el fondo, detrás del contenido */
+  border-radius: 50%; /* Circulares */
+  filter: blur(80px); /* Desenfoque para que sean suaves */
+  opacity: 0.35; /* Semi-transparentes */
+  /* Animación: se mueven lentamente como si "respiraran" */
+  animation: blobPulse 6s ease-in-out infinite;
+  pointer-events: none; /* Los clics los atraviesan (no interfieren con la UI) */
+  z-index: 0; /* Detrás de todo el contenido */
+}
+
+/* Blob verde grande en la parte superior izquierda */
+.hero-blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s; /* Empieza su animación de inmediato */
+}
+
+/* Blob azul-verde más pequeño en la parte inferior derecha */
+.hero-blob-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+  bottom: -50px;
+  right: -50px;
+  animation-delay: -3s; /* Empieza a medio ciclo (efecto alternado) */
+}
+
+/* Animación keyframe del blob: escala ligeramente y se mueve */
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(10px, -10px); }
+}
+
+/* El contenido hero va encima de los blobs con z-index: 1 */
+.hero-content {
+  position: relative;
+  z-index: 1; /* Sobre los blobs */
+  max-width: 680px;
+  margin: 0 auto; /* Centrado horizontal */
+}
+
+/* ================================================================
+   BADGE PEQUEÑO DE RECONOCIMIENTO
+   ================================================================ */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.2rem;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 50px; /* Píldora */
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-bottom: 2rem;
+  /* Animación de entrada */
+  animation: fadeInDown 0.6s ease-out;
+}
+
+/* ================================================================
+   TÍTULO PRINCIPAL HERO
+   ================================================================ */
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4rem); /* Tamaño responsive: min 2.5rem, max 4rem */
+  font-weight: 800; /* Extra bold */
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px; /* Kerning negativo para títulos grandes: aspecto premium */
+  animation: fadeInUp 0.7s ease-out 0.1s both;
+}
+
+/* El texto "Cancha Sintética" en verde resaltado */
+.title-accent {
+  /* Gradiente de texto: técnica donde el fondo degradado se "recorta" con el texto */
+  background: linear-gradient(135deg, var(--color-primary) 0%, #4ade80 100%);
+  -webkit-background-clip: text; /* El gradiente se aplica como fondo del texto */
+  -webkit-text-fill-color: transparent; /* Hace el texto transparente para ver el fondo */
+  background-clip: text;
+}
+
+/* ================================================================
+   SUBTÍTULO DEL HERO
+   ================================================================ */
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+  animation: fadeInUp 0.7s ease-out 0.2s both;
+}
+
+/* ================================================================
+   BOTONES DEL HERO (CTA)
+   ================================================================ */
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap; /* En móvil se ponen uno encima del otro */
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.7s ease-out 0.3s both;
+}
+
+/* Botón principal verde sólido */
+.btn-hero-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white !important;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.85rem 2rem;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+}
+
+.btn-hero-primary:hover {
+  transform: translateY(-3px); /* Elevación al hover */
+  box-shadow: 0 8px 30px rgba(34, 197, 94, 0.5);
+  filter: brightness(1.1);
+  color: white !important;
+}
+
+/* Botón secundario transparente con borde */
+.btn-hero-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary) !important;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.85rem 2rem;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-primary);
+  color: var(--color-primary) !important;
+  transform: translateY(-2px);
+}
+
+/* ================================================================
+   ESTADÍSTICAS DEL HERO
+   ================================================================ */
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 0.7s ease-out 0.4s both;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column; /* Número arriba, label abajo */
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Línea vertical separadora entre estadísticas */
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--color-border);
+}
+
+/* ================================================================
+   SECCIÓN DE CARACTERÍSTICAS
+   ================================================================ */
+.features-section {
+  padding: 4rem 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+}
+
+/* ================================================================
+   TARJETAS DE CARACTERÍSTICAS
+   ================================================================ */
+.feature-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  height: 100%; /* Todas las tarjetas tienen la misma altura */
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px); /* Se eleva más que las tarjetas normales */
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+/* Círculo con ícono de la característica */
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--color-primary-glow);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  /* Borde con efecto de brillo */
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.feature-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.feature-desc {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ================================================================
+   SECCIÓN CTA FINAL
+   ================================================================ */
+.cta-section {
+  padding: 4rem 0 2rem;
+}
+
+.cta-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 24px;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.cta-icon {
+  font-size: 3rem;
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cta-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.cta-desc {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
