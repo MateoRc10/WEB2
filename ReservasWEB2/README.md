@@ -1,10 +1,10 @@
-# ⚽ CanchasPro — Sistema de Reservas de Canchas Sintéticas 🏟️
+#  CanchasPro — Sistema de Reservas de Canchas Sintéticas 
 
 Este proyecto es una aplicación **Full Stack** construida bajo una arquitectura integrada de **ASP.NET Core (con .NET 9.0)** y **Angular**. Está diseñada para gestionar la reserva y alquiler de canchas deportivas sintéticas bajo el patrón arquitectónico **Modelo-Vista-Controlador (MVC)**.
 
 ---
 
-## 🚀 Características del Sistema
+##  Características del Sistema
 
 1. **Autenticación y Autorización Segura**: 
    - Registro de usuarios e Inicio de Sesión seguro.
@@ -20,7 +20,7 @@ Este proyecto es una aplicación **Full Stack** construida bajo una arquitectura
 
 ---
 
-## 🛠️ Requisitos Previos
+##  Requisitos Previos
 
 Asegúrate de contar con lo siguiente instalado en tu equipo:
 - [.NET 8.0 SDK o .NET 9.0 SDK](https://dotnet.microsoft.com/download)
@@ -29,7 +29,7 @@ Asegúrate de contar con lo siguiente instalado en tu equipo:
 
 ---
 
-## ⚙️ Configuración e Inicialización
+##  Configuración e Inicialización
 
 Toda la configuración principal del sistema se define en el archivo [appsettings.json](file:///d:/ReservasWEB2-20260610T012004Z-3-001/ReservasWEB2/appsettings.json):
 
@@ -44,7 +44,7 @@ Toda la configuración principal del sistema se define en el archivo [appsetting
 
 ---
 
-## 🏃 Pasos para Ejecutar el Proyecto
+##  Pasos para Ejecutar el Proyecto
 
 Sigue las siguientes instrucciones desde una terminal (abierta en la carpeta raíz del backend `ReservasWEB2`):
 
@@ -78,7 +78,7 @@ Una vez ejecutado, el servidor levantará automáticamente la API de .NET y el s
 
 ---
 
-## 👥 Credenciales de Prueba Precargadas
+##  Credenciales de Prueba Precargadas
 
 Para facilitar la sustentación y las pruebas, la base de datos se autosemilla automáticamente con los siguientes perfiles de prueba:
 
