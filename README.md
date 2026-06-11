@@ -88,3 +88,5 @@ Para facilitar la sustentación y las pruebas, la base de datos se autosemilla a
 | **Cliente** | `cliente@canchas.com` | `cliente123` | Buscar canchas, seleccionar fecha/hora y reservar turnos, cancelar sus propias reservas. |
 
 *También puedes registrar nuevos usuarios en la opción **"Regístrate aquí"** de la pantalla de login (por defecto, cualquier usuario nuevo se registrará con el rol de Cliente).*
+
+Este proyecto fue Diseñado y Creado con Apoyo de la IA, Modelo Gemini 3.5 Flash, en el IDE Antigravity
